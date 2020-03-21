@@ -71,7 +71,7 @@ function getAverage(value1, value2) {
  *   (-5,0) (10,-10) => 18.027756377319946
  */
 function getDistanceBetweenPoints(x1, y1, x2, y2) {
-  return x1 * y1 * x2 * y2;
+  return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
 }
 
 /**
@@ -87,7 +87,7 @@ function getDistanceBetweenPoints(x1, y1, x2, y2) {
  *   5*x = 0         => 0
  */
 function getLinearEquationRoot(a, b) {
-  return a * b;
+  return -b / a;
 }
 
 
@@ -162,7 +162,7 @@ function parseNumberFromString(value) {
  *   1,2,3   => 3.741657386773941
  */
 function getParallelipidedDiagonal(a, b, c) {
-  return a * b * c;
+  return Math.sqrt(a ** 2 + b ** 2 + c ** 2);
 }
 
 /**
@@ -204,13 +204,15 @@ function roundToPowerOfTen(num, pow) {
  *   17 => true
  */
 function isPrime(n) {
-  // for (let i = 2, s = Math.sqrt(n); i <= s; i++) {
-  //   if (n % i === 0) {
-  //     return false;
-  //   }
-  // }
-
-  return n > 1;
+  const sqrtnum = Math.floor(Math.sqrt(n));
+  let prime = n !== 1;
+  for (let i = 2; i < sqrtnum + 1; i += 1) { // sqrtnum+1
+    if (n % i === 0) {
+      prime = false;
+      break;
+    }
+  }
+  return prime;
 }
 
 /**
@@ -246,3 +248,139 @@ module.exports = {
   isPrime,
   toNumber,
 };
+
+
+// /**
+//  * Returns an angle (in radians) between two vectors given by xi and yi,
+//  * coordinates in Cartesian plane.
+//  * See details https://en.wikipedia.org/wiki/Euclidean_vector#Representations
+//  *
+//  * @param {number} x1
+//  * @param {number} y1
+//  * @param {number} x2
+//  * @param {number} y2
+//  * @return {number}
+//  *
+//  * @example:
+//  *   (1,0) (0,1)     => π/2
+//  *   (0,1) (0,-1)    => π
+//  *   (0,-1) (1,0)    => π/2
+//  *   (0,1) (0,1)     => 0
+//  *   (0,1) (1,2)     => 0
+//  */
+// function getAngleBetweenVectors(x1, y1, x2, y2) {
+//   const mod = Math.sqrt(x1 ** 2 + y1 ** 2) * Math.sqrt(x2 ** 2 + y2 ** 2);
+//   return Math.acos((x1 * x2 + y1 * y2) / mod);
+//   // throw new Error('Not implemented');
+// }
+
+
+// /**
+//  * Returns a number by given string representation.
+//  *
+//  * @param {string} value
+//  * @return {number}
+//  *
+//  * @example:
+//  *    '100'     => 100
+//  *     '37'     => 37
+//  * '-525.5'     => -525.5
+//  */
+// function parseNumberFromString(value) {
+//   return /\./.test(value) ? parseFloat(value) : parseInt(value, 10);
+//   // throw new Error('Not implemented');
+// }
+
+
+// /**
+//  * Returns the number rounded to specified power of 10.
+//  *
+//  * @param {number} num
+//  * @param {number} pow
+//  * @return {number}
+//  *
+//  * @example:
+//  *   1234, 0  => 1234
+//  *   1234, 1  => 1230
+//  *   1234, 2  => 1200
+//  *   1234, 3  => 1000
+//  *   1678, 0  => 1678
+//  *   1678, 1  => 1680
+//  *   1678, 2  => 1700
+//  *   1678, 3  => 2000
+//  */
+// function roundToPowerOfTen(num, pow) {
+//   const divider = (10 ** pow);
+//   return Math.round(num / divider) * divider;
+//   // throw new Error('Not implemented');
+// }
+
+// /**
+//  * Returns true is the number is prime; otherwise false.
+//  * See: https://en.wikipedia.org/wiki/Primality_test
+//  *
+//  * @param {number} n
+//  * @return {bool}
+//  *
+//  * @example:
+//  *   4 => false
+//  *   5 => true
+//  *   6 => false
+//  *   7 => true
+//  *   11 => true
+//  *   12 => false
+//  *   16 => false
+//  *   17 => true
+//  */
+// function isPrime(n) {
+//   const maxDivider = Math.floor(Math.sqrt(n));
+//   if (n === 2 || n === 3) {
+//     return true;
+//   }
+//   if (!(n % 2) || n < 2) {
+//     return false;
+//   }
+//   for (let i = 3; i < maxDivider + 1; i += 2) {
+//     if (!(n % i)) {
+//       return false;
+//     }
+//   }
+//   return true;
+//   // throw new Error('Not implemented');
+// }
+
+// /**
+//  * Tries to convert value to number and returns it if conversion was successfull;
+//  * otherwise returns default value passed as a second argument.
+//  *
+//  * @param {any} value
+//  * @param {any} def
+//  * @return {number}
+//  *
+//  * @example
+//  *   toNumber(null, 0) => 0
+//  *   toNumber('test', 0) => 0
+//  *   toNumber('1', 0) => 1
+//  *   toNumber(42, 0) => 42
+//  *   toNumber(new Number(42), 0) => 42
+//  */
+// function toNumber(value, def) {
+//   const num = parseInt(value && value.valueOf(), 10);
+//   return Number.isNaN(num) ? def : num;
+//   // throw new Error('Not implemented');
+// }
+
+// module.exports = {
+//   getRectangleArea,
+//   getCicleCircumference,
+//   getAverage,
+//   getDistanceBetweenPoints,
+//   getLinearEquationRoot,
+//   getAngleBetweenVectors,
+//   getLastDigit,
+//   parseNumberFromString,
+//   getParallelipidedDiagonal,
+//   roundToPowerOfTen,
+//   isPrime,
+//   toNumber,
+// };
