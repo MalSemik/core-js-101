@@ -66,7 +66,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-  return value;
+  return value.replace('Hello, ', '').replace('!', '');
 }
 
 
@@ -111,7 +111,7 @@ function removeLeadingAndTrailingWhitespaces(value) {
  *   'cat', 3 => 'catcatcat'
  */
 function repeatString(value, count) {
-  return value * count;
+  return value.repeat(count);
 }
 
 /**
@@ -127,7 +127,7 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-  return value + str;
+  return str.replace(value, '');
 }
 
 /**
@@ -142,7 +142,7 @@ function removeFirstOccurrences(str, value) {
  *   '<a>' => 'a'
  */
 function unbracketTag(str) {
-  return str;
+  return str.replace('<', '').replace('>', '');
 }
 
 
@@ -241,7 +241,10 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-  return value;
+  if (typeof (value) !== 'string') {
+    return false;
+  }
+  return true;
 }
 
 
